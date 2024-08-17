@@ -1,0 +1,12 @@
+.list{
+    position: relative;
+    top: 30px;
+    width: 700px;
+    left:29%;
+  }
+  .item{
+    font-size: 15px;
+  }
+  .delete{
+    font-size: 18px;
+  }

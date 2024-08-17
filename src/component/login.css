@@ -1,0 +1,23 @@
+.inputBox{
+    width: 500px;
+    position: relative;
+    left: 35%;
+}
+
+#username{
+    margin-bottom: 30px;
+}
+
+#lebel{
+    font-size:50px;
+    font-family:Arial Rounded MT ;
+    text-align: center;
+    position: relative;
+    top:50px;
+    margin-bottom: 50px;
+}
+
+.button{
+    margin-top: 20px;
+    margin-right: 10px;
+}

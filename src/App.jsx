@@ -3,72 +3,45 @@ import './App.css';
 import { Button,Input,DatePicker,message,Checkbox} from 'antd';
 import moment from 'moment'
 import TodoList from './component/Todolist.jsx';
+import Login from './component/login.jsx';
+import Regist from './component/register.jsx';
+import InputBox from './component/input.jsx';
+import Logout from './component/logout.jsx';
+
 
 function App() {
-  const [messageApi,contextHolder]=message.useMessage()
-
   useEffect(()=>{
     document.title="Todo List"
   },[])
 
-  const [inputValue,setInputValue]=useState("")
-  const handleOnChange = (e) => {
-    setInputValue(e.target.value)
-  }
 
-  const [selectedDate, setSelectedDate] = useState(null)
-  const handleDateChange = (date, dateString) => {
-      setSelectedDate(dateString)
-  }
-
+  const [state,setState]=useState(false)
+  const [registState,setRegistState]=useState(false)
+  const [username,setUsername]=useState("")
   const [listData,setListData]=useState([])
-  const handleOnClick = () => {
-    if (inputValue && selectedDate) {
-      setListData([...listData, {id:moment(),task: inputValue, date: selectedDate}]);
-      setInputValue("");
-      setSelectedDate(null);
-    }
-    else{
-        messageApi.open({
-          type:"error",
-          content:"请输入任务名称和截止时间"
-        })
-      }
-  };
-  
  
+
   return (
-    <div className="App">
-      {contextHolder}
-    <div className="head">Todo List</div>
-    <div className="input">
-      <Input
-        onChange={handleOnChange}
-        value={inputValue} 
-        placeholder="输入任务名称" 
-        id="inputNote"
-      />
+      <div className="App">
+      <div className='managed' style={{ display: state ? 'block' : 'none' }}>
+      <div className='logout'>
+        <Logout state={state} setState={setState} registState={registState} setRegistState={setRegistState} username={username} setUsername={setUsername}></Logout>
+      </div>
+      <div className='input'>
+        <InputBox username={username} listData={listData} setListData={setListData}></InputBox>
+      </div>
+      <div className="list">
+        <TodoList listData={listData} setListData={setListData} username={username} />
+      </div>
     </div>
-    <div className="date">
-      <DatePicker 
-        onChange={handleDateChange}
-        placeholder="选择截止时间" 
-        id="inputDate"
-        value={selectedDate ? moment(selectedDate, "YYYY-MM-DD") : null}
-      />
-      <Button 
-        type="primary" 
-        id="add" 
-        onClick={handleOnClick}
-      >
-        添加
-      </Button>
+    <div className='login' style={{ display: (!state&&!registState) ? 'block' : 'none' }}>
+      <Login state={state} setState={setState} registState={registState} setRegistState={setRegistState} username={username} setUsername={setUsername}/>
     </div>
-    <div class="list">
-      <TodoList listData={listData} setListData={setListData} />
+    <div className='regist'style={{ display: registState ? 'block' : 'none' }}>
+      <Regist registState={registState} setRegistState={setRegistState}/>
     </div>
     </div>
-  );
+  )
 }
 
-export default App;
+export default App
